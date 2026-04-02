@@ -38,8 +38,23 @@ Fix: Cut the transition. Start with the idea. If two ideas need connecting, the 
 **Passive voice** — "The decision was made," "Results were achieved," "It was determined."
 Fix: Name the actor. "I decided." "We hit the number." "She confirmed."
 
+**False agency** — Inanimate things performing human verbs. "The data tells us," "the decision emerges," "the culture shifts," "the market rewards," "the conversation moves toward." AI uses this to avoid naming who actually did something.
+Fix: Name the human. "The team fixed it" beats "the complaint becomes a fix." If no specific person fits, use "you" to put the reader in the seat.
+
 **Hedge layering** — "It's important to note that perhaps one might consider..."
 Fix: State it or cut it. If it's worth saying, say it directly.
+
+**Vague declaratives** — Announcing importance without naming the specific thing. "The reasons are structural." "The implications are significant." "The stakes are high." "The consequences are real."
+Fix: Name the specific thing or cut the sentence entirely. If a sentence says something matters without showing what, it earns nothing.
+
+**Dramatic fragmentation** — Manufactured profundity through staccato sentences. "[Noun]. That's it. That's the thing." / "X. And Y. And Z." / "This unlocks something. [Single word]."
+Fix: Complete sentences. Trust the content, not the presentation.
+
+**Lazy extremes** — "every," "always," "never," "everyone," "everybody," "nobody" used as false authority instead of a specific claim.
+Fix: Replace with the specific thing you actually mean, or cut.
+
+**Wh- sentence starters** — Sentences or paragraphs opening with What, When, Where, Which, Who, Why, How. "What makes this hard is..." / "Why this matters..." / "When you think about it..."
+Fix: Lead with the subject or the verb. "The constraint is..." beats "What makes this hard is the constraint."
 
 **Synonym cycling** — Avoiding word repetition by rotating synonyms ("said, stated, mentioned, noted, remarked").
 Fix: Repeat the word. Real writers repeat words. Or restructure the sentence.
@@ -47,8 +62,8 @@ Fix: Repeat the word. Real writers repeat words. Or restructure the sentence.
 **Emotional escalation** — Artificial build-up ("good, great, incredible, life-changing").
 Fix: Pick one honest descriptor. If something is good, call it good.
 
-**Over-signposting** — "First... Second... Third... Finally..." for ideas that don't need a numbered structure.
-Fix: Use signposting only when sequence genuinely matters. Trust the reader to follow clear prose.
+**Over-signposting** — "First... Second... Third... Finally..." for ideas that don't need a numbered structure. Also: meta-commentary that announces the structure instead of delivering it ("Let me walk you through," "In this section we'll," "As we'll see").
+Fix: Use signposting only when sequence genuinely matters. Let the writing move without announcing itself.
 
 **Mirror structure** — Answering in the same grammatical frame as the question.
 Fix: Answer in your own framing.
@@ -89,6 +104,21 @@ Never use. Replace or remove entirely.
 
 **Filler and hedge:** just (when removable), very, really, literally, actually, certainly, probably, basically, perhaps (unless strategic)
 
+**Business jargon** — replace with plain language, don't just delete:
+
+| Avoid | Use instead |
+|-------|-------------|
+| Navigate (challenges) | Handle, address |
+| Unpack (analysis) | Explain, examine |
+| Lean into | Accept, embrace |
+| Landscape (context) | Situation, field |
+| Double down | Commit, increase |
+| Deep dive | Analysis, examination |
+| Take a step back | Reconsider |
+| Moving forward | Next, from now |
+| Circle back | Return to, revisit |
+| On the same page | Aligned, agreed |
+
 ---
 
 ## Quality Check
@@ -102,8 +132,14 @@ Before returning output, confirm every item:
 5. No transition stacking?
 6. No "not just X, but also Y" constructions?
 7. No sentence starts with a vague "It" or "This" without a clear reference?
-8. Does it match the voice rules in `my-writing-style.md`?
-9. Does every sentence sound like something the user would say out loud?
+8. No inanimate subject performing a human verb (false agency)?
+9. No vague declaratives announcing importance without naming the specific thing?
+10. No dramatic fragmentation — staccato sentences performing profundity?
+11. No lazy extremes (every, always, never, nobody) standing in for a specific claim?
+12. No Wh- sentence starters (What, When, Why, How) that could lead with the subject instead?
+13. No business jargon from the substitution table?
+14. Does it match the voice rules in `my-writing-style.md`?
+15. Does every sentence sound like something the user would say out loud?
 
 If any check fails, fix it before delivering.
 
