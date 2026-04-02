@@ -1,7 +1,7 @@
 ---
 name: "apply-job"
 description: "Job application workflow: fetches JD, creates folder, runs fit analysis, tailors resume and cover letter. TRIGGERS: 'apply to this job', 'apply to this role', any job URL (LinkedIn, Greenhouse, Lever, Workday), 'job application', 'tailor my resume for', 'write a cover letter for'. Use when the user shares a job posting URL or asks to apply to a specific role."
-version: "1.5.0"
+version: "1.5.1"
 category: "Productivity"
 tags: ["job-search", "resume", "cover-letter", "career", "application", "tailoring", "apply", "job-posting", "linkedin"]
 ---
@@ -209,7 +209,7 @@ doc = Document('base/resume_ats_base.docx')
 replace_paragraph_text(doc,
     'old bullet text here',
     'new bullet text here')
-doc.save('applications/Company - Role/Khetiwe-Richards_Company_resume_2026Mon.docx')
+doc.save('applications/Company - Role/[resume_filename]')  # use naming convention from CONTEXT.md
 ```
 
 **Why this matters:** Many resumes use a colored or bold-styled prefix (bullet character or label like "Domains:") as the first XML run, with the body/value text in a separate run using different formatting. The old approach collapsed all text into Run 0, causing the entire paragraph to inherit the prefix's blue color or bold weight. This formatting-safe method detects both bullet prefixes ("• ") and label prefixes ("Label: ") by checking for formatting differences between Run 0 and Run 1, then preserves each run's original styling.
@@ -218,7 +218,9 @@ doc.save('applications/Company - Role/Khetiwe-Richards_Company_resume_2026Mon.do
 
 ### Naming Conventions
 
-- Resume: `Khetiwe-Richards_Company_resume_2026Mon.docx`
+Read the naming convention from CONTEXT.md. If not defined there, derive from the candidate's name in PROFILE.md using the format `LastName,FirstName_Company_resume_YYYYMon.docx`.
+
+- Resume: per CONTEXT.md naming convention
 - Cover Letter: `Cover Letter - Company.docx`
 - Fit Analysis: `Fit Analysis - Company.txt`
 - Job Description: `JD - Company - Role.txt`
@@ -264,7 +266,7 @@ Before writing, research the company (5-10 min):
 
 Upload (if configured in CONTEXT.md):
 - `Fit Analysis - Company.txt`
-- `Khetiwe-Richards_Company_resume_YearMonth.docx`
+- resume file, per naming convention in CONTEXT.md
 - `Cover Letter - Company.docx`
 
 If CONTEXT.md says no Drive upload, skip this step.
