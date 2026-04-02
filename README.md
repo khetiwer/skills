@@ -109,3 +109,13 @@ in their voice, read and follow the skill at `C:/Users/you/skills/proof/SKILL.md
 Use the `create-skill` skill to build new ones. It asks two questions before writing anything: whether the skill belongs in your global library or inside a specific project, and what it should actually do. That conversation usually surfaces scope problems before they get baked in.
 
 The `create-skill` README has the full process.
+
+---
+
+## Credits
+
+These skills were built on top of — or inspired by — work from others in the Claude Code community.
+
+**apply-job** — Built on the foundation of [Aaron Skinner's claude-skills](https://github.com/aaronwskinner/claude-skills). The core job application workflow structure originated there.
+
+**proof** — Inspired by two projects: [blader/humanizer](https://github.com/blader/humanizer) and [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop). Both tackle the same problem of stripping AI-generated patterns from writing — worth checking out if you want a different take on the same idea.
