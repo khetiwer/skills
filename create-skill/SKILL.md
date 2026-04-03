@@ -134,18 +134,29 @@ If yes, run the following in order:
 python -c "import zipfile, os; z = zipfile.ZipFile('<skill-name>.zip', 'w', zipfile.ZIP_DEFLATED); [z.write(os.path.join('<skill-name>', f), os.path.join('<skill-name>', f)) for f in os.listdir('<skill-name>')]; z.close()"
 ```
 
-**2. Add the download link to README.md**
+**2. Check for a GitHub remote:**
+```
+git remote -v
+```
+
+If a remote exists, continue with steps 3 and 4. If no remote is configured, skip to step 5.
+
+**3. Add the download link to README.md**
 
 Find the skill's entry in `README.md` and append this line at the end of it:
 ```
 [Download <skill-name>.zip](https://github.com/khetiwer/skills/releases/latest/download/<skill-name>.zip)
 ```
 
-**3. Commit and push both files:**
+**4. Commit and push both files:**
 ```
 git add <skill-name>.zip README.md
 git commit -m "Add <skill-name>.zip and README download link"
 git push
 ```
+
+**5. If no GitHub remote:**
+
+Tell the user: "No GitHub remote found. The zip is ready at `<path>/<skill-name>.zip` — share it directly however works best for you."
 
 If the user says no or wants more changes, return to refining. Do not publish until they explicitly confirm.
