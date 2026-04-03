@@ -51,6 +51,17 @@ Triggers on: "can we make this a skill," "let's build a skill for X," "I want to
 
 ---
 
+### `transcribe-audio`
+**Transcribe local audio or video files with OpenAI Whisper**
+
+Checks for Whisper and FFmpeg, walks through model selection, task type (transcribe or translate), output format, and output directory, then runs Whisper. Warns before first-run model downloads, which can look like the process has hung but haven't.
+
+Triggers on: "transcribe this," "run Whisper on," sharing an audio/video file path, "convert this recording to text"
+
+Configuration: language (default: English), CPU/GPU mode, and inline output verbosity can all be changed by editing `SKILL.md` directly. See the Configuration notes section inside the skill.
+
+---
+
 ## How to install
 
 ### Option 1 — Download a single skill
