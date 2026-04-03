@@ -60,6 +60,8 @@ Triggers on: "transcribe this," "run Whisper on," sharing an audio/video file pa
 
 Configuration: language (default: English), CPU/GPU mode, and inline output verbosity can all be changed by editing `SKILL.md` directly. See the Configuration notes section inside the skill.
 
+[Download transcribe-audio.zip](https://github.com/khetiwer/skills/releases/latest/download/transcribe-audio.zip)
+
 ---
 
 ## How to install
