@@ -141,16 +141,21 @@ git remote -v
 
 If a remote exists, continue with steps 3 and 4. If no remote is configured, skip to step 5.
 
-**3. Add the download link to README.md**
-
-Find the skill's entry in `README.md` and append this line at the end of it:
+**3. Upload the zip as a GitHub Release asset** (do NOT commit the zip to the repo — zips belong in releases, not in the file tree):
 ```
-[Download <skill-name>.zip](https://github.com/khetiwer/skills/releases/latest/download/<skill-name>.zip)
+gh release upload <latest-tag> <skill-name>.zip
 ```
 
-**4. Commit and push both files:**
+To find the latest tag: `gh release list` — use the tag shown as Latest.
+
+Then add the download link to README.md and commit only the README:
 ```
-git add <skill-name>.zip README.md
+[Download <skill-name>.zip](https://github.com/<owner>/skills/releases/latest/download/<skill-name>.zip)
+```
+
+**4. Commit and push the README only:**
+```
+git add README.md
 git commit -m "Add <skill-name>.zip and README download link"
 git push
 ```
