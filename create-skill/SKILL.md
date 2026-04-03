@@ -120,3 +120,32 @@ If any check fails, revise the description before delivering.
 Save the completed skill to the location confirmed in Step 1. Name the folder to match the skill's `name` frontmatter exactly.
 
 Confirm the full path with the user before writing any files.
+
+---
+
+## Step 7: Publish
+
+Once the user confirms they are happy with the skill, ask: "Ready to publish? I'll zip it, add the download link to README.md, and push to GitHub."
+
+If yes, run the following in order:
+
+**1. Zip the skill folder** (from inside the skills directory):
+```
+python -c "import zipfile, os; z = zipfile.ZipFile('<skill-name>.zip', 'w', zipfile.ZIP_DEFLATED); [z.write(os.path.join('<skill-name>', f), os.path.join('<skill-name>', f)) for f in os.listdir('<skill-name>')]; z.close()"
+```
+
+**2. Add the download link to README.md**
+
+Find the skill's entry in `README.md` and append this line at the end of it:
+```
+[Download <skill-name>.zip](https://github.com/khetiwer/skills/releases/latest/download/<skill-name>.zip)
+```
+
+**3. Commit and push both files:**
+```
+git add <skill-name>.zip README.md
+git commit -m "Add <skill-name>.zip and README download link"
+git push
+```
+
+If the user says no or wants more changes, return to refining. Do not publish until they explicitly confirm.
