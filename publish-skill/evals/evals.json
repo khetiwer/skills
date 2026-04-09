@@ -1,0 +1,51 @@
+{
+  "skill_name": "publish-skill",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "publish proof",
+      "expected_output": "Skill reads proof/SKILL.md, asks for confirmation, runs validation and packaging, updates GitHub release asset, calls update_skill and publish_skill on Agentman, and outputs a step-by-step confirmation summary. No save_skill_resource calls since proof has no auxiliary files.",
+      "files": [],
+      "expectations": [
+        "The transcript shows a Read of ~/.claude/skills/proof/SKILL.md before any other action",
+        "The transcript shows a confirmation prompt to the user before running validation or packaging",
+        "The transcript shows the validation script being run via Bash",
+        "The transcript shows the package script being run via Bash",
+        "The transcript shows a Bash command checking for a GitHub remote",
+        "The transcript shows update_skill being called with slug 'proof' and the full SKILL.md content",
+        "The transcript does NOT show any save_skill_resource calls (proof has no auxiliary files)",
+        "The transcript shows publish_skill being called after update_skill",
+        "The final output includes a step-by-step summary with status for each action taken"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I updated my create-skill, push the changes",
+      "expected_output": "Skill triggers from natural language, resolves to create-skill, reads SKILL.md, asks for confirmation, runs validation and packaging, updates GitHub, calls update_skill then save_skill_resource for each file in references/, scripts/, and agents/, then calls publish_skill. Summary reports N auxiliary files synced.",
+      "files": [],
+      "expectations": [
+        "The skill triggers from the natural language phrase 'push the changes' without the user naming publish-skill explicitly",
+        "The transcript shows a Read of ~/.claude/skills/create-skill/SKILL.md",
+        "The transcript shows the skill detecting auxiliary files in at least two of: references/, scripts/, agents/",
+        "The transcript shows update_skill being called with slug 'create-skill'",
+        "The transcript shows save_skill_resource being called at least once for an auxiliary file",
+        "The transcript shows publish_skill being called after update_skill and all save_skill_resource calls",
+        "The final summary reports the number of auxiliary files synced to Agentman"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "publish ghost-skill",
+      "expected_output": "Skill attempts to find ~/.claude/skills/ghost-skill/SKILL.md, fails, and asks the user for the path. Does not proceed to validation, packaging, GitHub, or Agentman steps.",
+      "files": [],
+      "expectations": [
+        "The transcript shows the skill attempting to locate ~/.claude/skills/ghost-skill/SKILL.md or similar path",
+        "The transcript does NOT show the validation script being run",
+        "The transcript does NOT show the package script being run",
+        "The transcript does NOT show any GitHub commands being executed",
+        "The transcript does NOT show update_skill or save_skill_resource being called",
+        "The skill asks the user to provide the path rather than erroring out or proceeding"
+      ]
+    }
+  ]
+}
