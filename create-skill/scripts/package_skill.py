@@ -7,10 +7,13 @@ Usage:
 """
 
 import fnmatch
+import os
 import sys
 import zipfile
 from pathlib import Path
-from scripts.quick_validate import validate_skill
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from quick_validate import validate_skill
 
 EXCLUDE_DIRS = {"__pycache__", "node_modules"}
 EXCLUDE_GLOBS = {"*.pyc"}
@@ -55,7 +58,7 @@ def package_skill(skill_path, output_dir=None):
     output_path = Path(output_dir).resolve() if output_dir else Path.cwd()
     output_path.mkdir(parents=True, exist_ok=True)
 
-    skill_filename = output_path / f"{skill_name}.skill"
+    skill_filename = output_path / f"{skill_name}.zip"
 
     try:
         with zipfile.ZipFile(skill_filename, 'w', zipfile.ZIP_DEFLATED) as zipf:

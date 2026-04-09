@@ -71,18 +71,25 @@ gh release upload <latest-tag> <skill-name>.zip --clobber --repo <owner>/skills
 
 The `--clobber` flag is required — without it, the upload fails if an asset with that name already exists. This is an update, not a first upload.
 
-**Check if the README download link already exists:**
+**Check the README entry:**
 ```bash
-grep -n "<skill-name>.zip" ~/.claude/skills/README.md
+grep -n "<skill-name>" ~/.claude/skills/README.md
 ```
 
-If the link is already there, skip the README commit — no change needed. If it's missing (this skill was never published before through this flow), add it and commit:
+Two things to check:
+
+1. **Download link** — if the `[Download <skill-name>.zip]` link is missing, add it.
+2. **Skill description** — read the skill's entry in the README Skills section and compare it to the current `SKILL.md` description and triggers. If the name, one-liner, triggers, or requirements have changed, update the entry. Don't skip this — a skill whose README entry doesn't match what it actually does is misleading to anyone reading the repo.
+
+If anything changed, commit and push:
 
 ```bash
 git -C ~/.claude/skills add README.md
-git -C ~/.claude/skills commit -m "Add download link for <skill-name>.zip"
+git -C ~/.claude/skills commit -m "Update README entry for <skill-name>"
 git -C ~/.claude/skills push
 ```
+
+If nothing changed, skip the commit.
 
 ---
 

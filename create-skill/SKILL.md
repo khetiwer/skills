@@ -414,7 +414,8 @@ gh release upload <latest-tag> <skill-name>.zip --repo <owner>/skills
 
 To find the latest tag: `gh release list --repo <owner>/skills` — use the tag shown as Latest.
 
-Then add the download link to README.md:
+Then add or update the skill's entry in the README.md Skills section. Each entry needs: a heading with the skill name, a bold one-line description, 2-3 sentences on what it does, a triggers line, and the download link. If an entry already exists for this skill, check that the description and triggers still match the current SKILL.md — update if they've drifted.
+
 ```
 [Download <skill-name>.zip](https://github.com/<owner>/skills/releases/latest/download/<skill-name>.zip)
 ```
