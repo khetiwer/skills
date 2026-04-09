@@ -64,6 +64,19 @@ Configuration: language (default: English), CPU/GPU mode, and inline output verb
 
 ---
 
+### `publish-skill`
+**Publish skill updates to GitHub and Agentman in one step**
+
+Takes an existing skill by name, packages it, uploads the updated zip to GitHub as a release asset, updates the skill in Agentman, syncs all auxiliary files, and publishes the draft live. Run this after editing a skill locally and you're ready to ship.
+
+Triggers on: "publish [skill-name]", "push my [skill] changes", "sync [skill] to Agentman", "I updated [skill], publish it", "ship [skill]"
+
+Note: Only runs from Claude Code CLI — requires bash and git access. Use `create-skill` for net new skills; this skill handles updates only.
+
+[Download publish-skill.zip](https://github.com/khetiwer/skills/releases/latest/download/publish-skill.zip)
+
+---
+
 ## How to install
 
 ### Option 1 — Download a single skill
