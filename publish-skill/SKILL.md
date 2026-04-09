@@ -33,7 +33,7 @@ Do not proceed until confirmed.
 Run the validation script before touching anything:
 
 ```bash
-cd ~/.claude/skills && python -m scripts.quick_validate <path-to-skill>
+cd ~/.claude/skills && python create-skill/scripts/quick_validate.py <path-to-skill>
 ```
 
 If validation fails, surface the errors to the user and stop. Fix issues before publishing — a broken skill should not go out.
@@ -43,10 +43,10 @@ If validation fails, surface the errors to the user and stop. Fix issues before 
 ## Step 3: Package
 
 ```bash
-cd ~/.claude/skills && python -m scripts.package_skill <path-to-skill>
+cd ~/.claude/skills && python create-skill/scripts/package_skill.py <path-to-skill>
 ```
 
-This creates `<skill-name>.skill` (zip format), excluding evals, `__pycache__`, and build artifacts. Note the output path — you'll use it in Step 4.
+This creates `<skill-name>.zip` (zip format), excluding evals, `__pycache__`, and build artifacts. Note the output path — you'll use it in Step 4.
 
 ---
 
@@ -66,21 +66,21 @@ gh release list --repo <owner>/skills --limit 1
 
 **Upload the updated asset** (use `--clobber` to overwrite the existing file):
 ```bash
-gh release upload <latest-tag> <skill-name>.skill --clobber --repo <owner>/skills
+gh release upload <latest-tag> <skill-name>.zip --clobber --repo <owner>/skills
 ```
 
 The `--clobber` flag is required — without it, the upload fails if an asset with that name already exists. This is an update, not a first upload.
 
 **Check if the README download link already exists:**
 ```bash
-grep -n "<skill-name>.skill" ~/.claude/skills/README.md
+grep -n "<skill-name>.zip" ~/.claude/skills/README.md
 ```
 
 If the link is already there, skip the README commit — no change needed. If it's missing (this skill was never published before through this flow), add it and commit:
 
 ```bash
 git -C ~/.claude/skills add README.md
-git -C ~/.claude/skills commit -m "Add download link for <skill-name>.skill"
+git -C ~/.claude/skills commit -m "Add download link for <skill-name>.zip"
 git -C ~/.claude/skills push
 ```
 
@@ -119,7 +119,7 @@ Report what happened:
 Published: <skill-name>
 
 ✓ Validated — no errors
-✓ Packaged → <skill-name>.skill
+✓ Packaged → <skill-name>.zip
 ✓ GitHub — release asset updated (tag: <tag>)
 ✓ Agentman — SKILL.md updated
 ✓ Agentman — <N> auxiliary files synced

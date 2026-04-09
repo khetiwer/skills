@@ -382,7 +382,7 @@ Confirm the full path with the user before writing any files.
 Before publishing, run the validation script:
 
 ```bash
-python -m scripts.quick_validate <path-to-skill>
+cd ~/.claude/skills && python create-skill/scripts/quick_validate.py <path-to-skill>
 ```
 
 This checks frontmatter format, required fields, naming conventions, and description length limits. Fix any issues before proceeding.
@@ -395,40 +395,40 @@ If yes:
 
 **1. Package the skill:**
 ```bash
-python -m scripts.package_skill <path-to-skill>
+cd ~/.claude/skills && python create-skill/scripts/package_skill.py <path-to-skill>
 ```
 
-This creates a `.skill` file (zip format), excluding evals, __pycache__, and other build artifacts.
+This creates a `.zip` file, excluding evals, __pycache__, and other build artifacts.
 
 **2. Check for a GitHub remote:**
 ```bash
-git remote -v
+git -C ~/.claude/skills remote -v
 ```
 
 If a remote exists, continue with steps 3 and 4. If no remote is configured, skip to step 5.
 
 **3. Upload as a GitHub Release asset** (do NOT commit the zip to the repo):
 ```bash
-gh release upload <latest-tag> <skill-name>.skill
+gh release upload <latest-tag> <skill-name>.zip --repo <owner>/skills
 ```
 
-To find the latest tag: `gh release list` — use the tag shown as Latest.
+To find the latest tag: `gh release list --repo <owner>/skills` — use the tag shown as Latest.
 
 Then add the download link to README.md:
 ```
-[Download <skill-name>.skill](https://github.com/<owner>/skills/releases/latest/download/<skill-name>.skill)
+[Download <skill-name>.zip](https://github.com/<owner>/skills/releases/latest/download/<skill-name>.zip)
 ```
 
 **4. Commit and push the README only:**
 ```bash
-git add README.md
-git commit -m "Add <skill-name>.skill and README download link"
-git push
+git -C ~/.claude/skills add README.md
+git -C ~/.claude/skills commit -m "Add <skill-name> and README download link"
+git -C ~/.claude/skills push
 ```
 
 **5. If no GitHub remote:**
 
-Tell the user: "No GitHub remote found. The package is ready at `<path>/<skill-name>.skill` — share it directly however works best for you."
+Tell the user: "No GitHub remote found. The package is ready at `<path>/<skill-name>.zip` — share it directly however works best for you."
 
 **6. Publish to Agentman:**
 
