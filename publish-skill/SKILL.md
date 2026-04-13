@@ -1,17 +1,17 @@
 ---
 name: publish-skill
-description: Use this skill to publish updates to an existing skill — packages it, pushes to GitHub as a release asset, updates Agentman, and publishes the draft live. Trigger on: "publish [skill-name]", "push my [skill] changes", "sync [skill] to Agentman", "I updated [skill], publish it", "ship [skill]". Only use for skills that already exist in both GitHub and Agentman — for net new skills, use create-skill instead.
+description: Use this skill to publish updates to an existing skill — packages it, pushes to GitHub as a release asset, updates Agentman, and publishes the draft live. Trigger on: "publish [skill-name]", "push my [skill] changes", "sync [skill] to Agentman", "I updated [skill], publish it", "ship [skill]". Also handles scope changes (e.g., promoting a private skill to public, or pulling a skill off GitHub). Works for both existing and net-new skills.
 ---
 
 # Publish Skill
 
-Updates an existing skill across all three surfaces: local file system (already done — you edited it), GitHub (release asset), and Agentman (update + publish). Run this after you've finished editing a skill locally and are ready to ship the changes.
+Publishes or updates a skill across the surfaces you choose: GitHub (public release asset) and/or Agentman (cross-surface availability). Always asks which surfaces to target — never assumes.
 
 This skill only runs from Claude Code CLI. It requires bash access for git and gh operations.
 
 ---
 
-## Step 1: Resolve the Skill Path
+## Step 1: Resolve the Skill Path and Distribution Scope
 
 Derive the local path from the skill name the user provided:
 
@@ -22,7 +22,16 @@ Read `SKILL.md` and extract:
 - `name` frontmatter → this is the Agentman slug
 - List of all auxiliary files present in the skill folder (`references/`, `scripts/`, `assets/`) — you'll need these for Agentman
 
-Confirm with the user: "Publishing `<name>` from `<path>`. This will update GitHub and Agentman. Proceed?"
+**Ask the distribution scope question explicitly — do not infer or assume:**
+
+"What's the distribution scope for `<name>`?
+- **Public** — push to GitHub (public release asset) + Agentman
+- **Private, cross-surface** — Agentman only, no GitHub
+- **Private, local** — neither; just keep it local"
+
+Wait for the answer before proceeding.
+
+Then confirm: "Got it — publishing `<name>` from `<path>` with scope: [scope]. Proceed?"
 
 Do not proceed until confirmed.
 
@@ -50,7 +59,9 @@ This creates `<skill-name>.zip` (zip format), excluding evals, `__pycache__`, an
 
 ---
 
-## Step 4: Update GitHub
+## Step 4: Update GitHub (Public scope only)
+
+If distribution scope is Private (cross-surface or local), skip this step entirely.
 
 **Check for a remote:**
 ```bash
@@ -93,15 +104,17 @@ If nothing changed, skip the commit.
 
 ---
 
-## Step 5: Update Agentman
+## Step 5: Update Agentman (Public or Private cross-surface scope only)
 
-**Update SKILL.md content:**
+If distribution scope is Private local, skip this step entirely.
+
+**Update or create SKILL.md content:**
 
 Call `update_skill` with:
 - `slug`: the `name` value from frontmatter
 - `content`: the full content of `SKILL.md` including frontmatter
 
-If `update_skill` returns a "not found" error, stop and tell the user: "This skill doesn't exist in Agentman yet. Use `create-skill` to publish it for the first time — that flow handles initial Agentman creation."
+If `update_skill` returns a "not found" error, this is a first publish to Agentman — call `create_skill` instead with the same content.
 
 **Update auxiliary files:**
 
@@ -120,19 +133,26 @@ Read each file before calling — don't pass stale content. Do this for every au
 
 ## Step 6: Confirm
 
-Report what happened:
+Report what happened, showing only the surfaces that were in scope:
 
 ```
 Published: <skill-name>
+Scope: [Public / Private cross-surface / Private local]
 
 ✓ Validated — no errors
 ✓ Packaged → <skill-name>.zip
+
+[If Public:]
 ✓ GitHub — release asset updated (tag: <tag>)
+✓ README — entry updated (or: no changes needed)
+
+[If Public or Private cross-surface:]
 ✓ Agentman — SKILL.md updated
 ✓ Agentman — <N> auxiliary files synced
 ✓ Agentman — draft published live
 
-Skill is now current across GitHub and Agentman.
+[If Private local:]
+✓ Local only — no GitHub or Agentman changes made
 ```
 
 If any step failed, report it clearly and leave the others as ✓ so the user knows what did land.

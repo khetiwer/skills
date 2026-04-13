@@ -17,15 +17,15 @@ A skill for building new skills in your personal skills library. It enforces two
 
 ---
 
-## Step 1: Placement
+## Step 1: Placement and Distribution
 
-Ask these two questions before doing anything else. Wait for answers to both.
+Ask these four questions before doing anything else. Ask them one at a time and wait for each answer before continuing.
 
 **Question 1:** "If you deleted every project you're currently working on tomorrow, would you still want this skill?"
 
 **Question 2:** "Does this skill need to read from or write to any project-specific files, folders, or systems to do its job?"
 
-**How to interpret the answers:**
+**How to interpret Q1 + Q2 (placement decision):**
 
 | Q1 | Q2 | Location |
 |---|---|---|
@@ -34,16 +34,32 @@ Ask these two questions before doing anything else. Wait for answers to both.
 
 A skill that currently has hardcoded project paths belongs in the project even if the concept feels reusable. Promote it to top-level only after you've actually made it general-purpose.
 
+**Question 3:** "Does this skill contain anything personal — your own criteria, context, credentials, or details you wouldn't share with a stranger?"
+
+**Question 4 (only if Q3 is yes):** "Do you want this available across Claude surfaces (Cowork, etc.) via Agentman, or strictly on this machine?"
+
+**How to interpret Q3 + Q4 (distribution decision):**
+
+| Q3 | Q4 | Distribution scope |
+|---|---|---|
+| No — fully generic | — | **Public**: GitHub + Agentman |
+| Yes — personal content | Cross-surface | **Private, cross-surface**: Agentman only, no GitHub |
+| Yes — personal content | Local only | **Private, local**: neither GitHub nor Agentman |
+
 **Consequences to surface at confirmation time:**
 
-| Placement | Slash command in CLI | GitHub | Agentman |
-|---|---|---|---|
-| Global (`~/.claude/skills/`) | Yes — auto-registered | Yes | Yes |
-| Project-local | No — invoke by name or path only | Yes | Yes |
+| Placement | Distribution scope | Slash command in CLI | GitHub | Agentman |
+|---|---|---|---|---|
+| Global (`~/.claude/skills/`) | Public | Yes — auto-registered | Yes | Yes |
+| Global (`~/.claude/skills/`) | Private, cross-surface | Yes — auto-registered | No | Yes |
+| Global (`~/.claude/skills/`) | Private, local | Yes — auto-registered | No | No |
+| Project-local | Public | No — invoke by name or path only | Yes | Yes |
+| Project-local | Private, cross-surface | No — invoke by name or path only | No | Yes |
+| Project-local | Private, local | No — invoke by name or path only | No | No |
 
-Both placements go to GitHub and Agentman. Agentman makes the skill available in Cowork and any other Claude surface regardless of where the local file lives — even project-local skills with hardcoded paths work in Cowork because Cowork has access to your project files.
+Agentman makes the skill available in Cowork and any other Claude surface. Even project-local skills with hardcoded paths work in Cowork because Cowork has access to your project files.
 
-Confirm the location with the user before moving on.
+Confirm both placement and distribution scope with the user before moving on. Record the distribution scope — Step 11 will use it.
 
 ---
 
@@ -389,59 +405,10 @@ This checks frontmatter format, required fields, naming conventions, and descrip
 
 ### Publish
 
-Once the user confirms they are happy with the skill, ask: "Ready to publish? I'll package it and push to GitHub."
+Once the user confirms they are happy with the skill, run `publish-skill`. It will ask for the distribution scope (already decided in Step 1 — carry that answer forward) and handle packaging, GitHub, and Agentman based on that scope.
 
-If yes:
+<!-- For the AI: pass the scope from Step 1 directly when publish-skill asks — the user already decided it. -->
 
-**1. Package the skill:**
-```bash
-cd ~/.claude/skills && python create-skill/scripts/package_skill.py <path-to-skill>
-```
-
-This creates a `.zip` file, excluding evals, __pycache__, and other build artifacts.
-
-**2. Check for a GitHub remote:**
-```bash
-git -C ~/.claude/skills remote -v
-```
-
-If a remote exists, continue with steps 3 and 4. If no remote is configured, skip to step 5.
-
-**3. Upload as a GitHub Release asset** (do NOT commit the zip to the repo):
-```bash
-gh release upload <latest-tag> <skill-name>.zip --repo <owner>/skills
-```
-
-To find the latest tag: `gh release list --repo <owner>/skills` — use the tag shown as Latest.
-
-Then add or update the skill's entry in the README.md Skills section. Each entry needs: a heading with the skill name, a bold one-line description, 2-3 sentences on what it does, a triggers line, and the download link. If an entry already exists for this skill, check that the description and triggers still match the current SKILL.md — update if they've drifted.
-
-```
-[Download <skill-name>.zip](https://github.com/<owner>/skills/releases/latest/download/<skill-name>.zip)
-```
-
-**4. Commit and push the README only:**
-```bash
-git -C ~/.claude/skills add README.md
-git -C ~/.claude/skills commit -m "Add <skill-name> and README download link"
-git -C ~/.claude/skills push
-```
-
-**5. If no GitHub remote:**
-
-Tell the user: "No GitHub remote found. The package is ready at `<path>/<skill-name>.zip` — share it directly however works best for you."
-
-**6. Publish to Agentman:**
-
-Call `create_skill` with the full content of `SKILL.md` (including frontmatter).
-
-Then, for each auxiliary file that exists in the skill folder (`references/`, `scripts/`, `assets/`), call `save_skill_resource` with:
-- `slug`: the skill's slug (matches the `name` frontmatter, lowercased and hyphenated)
-- `file_path`: relative path within the skill directory (e.g., `references/schemas.md`, `scripts/main.py`)
-- `content`: the full file content
-
-Do this for every auxiliary file. Do not skip files — Agentman needs the full skill to work correctly across Claude surfaces.
-
-If `create_skill` fails because the slug already exists, use `update_skill` instead, then call `publish_skill` to make the updated draft live.
+<!-- For users who have borrowed this skill: publish-skill is a separate skill not included here — it's specific to the author's publishing setup (GitHub releases + Agentman). If you want automated publishing, build your own publish-skill that matches your distribution targets and drop it in ~/.claude/skills/. Or skip this step and distribute the packaged skill however works for you. -->
 
 If the user says no or wants more changes, return to refining. Do not publish until they explicitly confirm.
