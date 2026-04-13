@@ -1,3 +1,5 @@
 *.zip
 *.skill
 DRAFT-GUARDIAN-SKILL.md
+__pycache__/
+*.pyc
