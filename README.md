@@ -47,6 +47,8 @@ Enforces two decisions before writing anything: where the skill lives and what i
 
 Triggers on: "can we make this a skill," "let's build a skill for X," "I want to save this as a skill," "add this to my skills library"
 
+**Publishing:** At the end of the build workflow, `create-skill` calls `publish-skill` to handle distribution. That skill is not included here — it's specific to the author's setup (GitHub releases + Agentman). If you want automated publishing, build your own `publish-skill` that matches your distribution targets and drop it in `~/.claude/skills/`. Or skip the publish step and distribute the packaged skill however works for you.
+
 [Download create-skill.zip](https://github.com/khetiwer/skills/releases/latest/download/create-skill.zip)
 
 ---
@@ -63,17 +65,6 @@ Configuration: language (default: English), CPU/GPU mode, and inline output verb
 [Download transcribe-audio.zip](https://github.com/khetiwer/skills/releases/latest/download/transcribe-audio.zip)
 
 ---
-
-### `publish-skill`
-**Publish skill updates to GitHub and Agentman in one step**
-
-Takes an existing skill by name, packages it, uploads the updated zip to GitHub as a release asset, updates the skill in Agentman, syncs all auxiliary files, and publishes the draft live. Run this after editing a skill locally and you're ready to ship.
-
-Triggers on: "publish [skill-name]", "push my [skill] changes", "sync [skill] to Agentman", "I updated [skill], publish it", "ship [skill]"
-
-Note: Only runs from Claude Code CLI (requires bash and git access). Use `create-skill` for net new skills; this skill handles updates only.
-
-[Download publish-skill.zip](https://github.com/khetiwer/skills/releases/latest/download/publish-skill.zip)
 
 ---
 
@@ -153,3 +144,5 @@ These skills were built on top of (or inspired by) work from others in the Claud
 **apply-job** — Built on the foundation of [Aaron Skinner's claude-skills](https://github.com/aaronwskinner/claude-skills). The core job application workflow structure originated there.
 
 **proof** — Inspired by two projects: [blader/humanizer](https://github.com/blader/humanizer) and [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop). Both tackle the same problem of stripping AI-generated patterns from writing. Worth checking out if you want a different take on the same idea.
+
+**create-skill** — Adapted from Anthropic's [skill-creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator), which ships with Claude Desktop. Tweaked for Claude Code CLI: placement and distribution decisions are surfaced upfront, the eval pipeline is more structured, and publishing is handled by a companion `publish-skill` rather than inline steps.
