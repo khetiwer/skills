@@ -92,15 +92,15 @@ Two things to check:
 1. **Download link** — if the `[Download <skill-name>.zip]` link is missing, add it.
 2. **Skill description** — read the skill's entry in the README Skills section and compare it to the current `SKILL.md` description and triggers. If the name, one-liner, triggers, or requirements have changed, update the entry. Don't skip this — a skill whose README entry doesn't match what it actually does is misleading to anyone reading the repo.
 
-If anything changed, commit and push:
+**Commit and push the skill source files and README:**
 
 ```bash
-git -C ~/.claude/skills add README.md
-git -C ~/.claude/skills commit -m "Update README entry for <skill-name>"
+git -C ~/.claude/skills add <skill-folder>/ README.md
+git -C ~/.claude/skills commit -m "Publish <skill-name>"
 git -C ~/.claude/skills push
 ```
 
-If nothing changed, skip the commit.
+Always commit the skill folder — that's the source of truth in the repo. The zip is a convenience artifact; the files in the tree are what people actually read and diff. Stage the whole skill folder, not just SKILL.md, so references/, scripts/, and assets/ stay current too.
 
 ---
 
@@ -144,7 +144,7 @@ Scope: [Public / Private cross-surface / Private local]
 
 [If Public:]
 ✓ GitHub — release asset updated (tag: <tag>)
-✓ README — entry updated (or: no changes needed)
+✓ GitHub — source committed and pushed
 
 [If Public or Private cross-surface:]
 ✓ Agentman — SKILL.md updated
