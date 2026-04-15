@@ -1,0 +1,79 @@
+{
+  "skill_name": "thought-partner",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Help me think through whether I should be targeting senior IC roles or pivoting toward management positions in my job search",
+      "expected_output": "A Phase 1 opening that asks for the user's current thinking before offering any analysis. Should not present pros/cons of IC vs management.",
+      "files": [],
+      "expectations": [
+        "The response asks what the user's current thinking or lean is before offering analysis",
+        "The response does not list pros and cons of IC vs management roles",
+        "The response does not recommend one path over the other",
+        "The response asks no more than two questions",
+        "The response is conversational in tone, not structured with headers or bullet-point lists"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I've been out of work for a while and I'm starting to wonder if I should lower my salary expectations. What am I missing?",
+      "expected_output": "A Phase 1 opening that recognizes potential threat-reduction pressure (GT3) and does not rush to reassure or resolve. Should ask what's pulling the user in each direction.",
+      "files": [],
+      "expectations": [
+        "The response does not immediately reassure the user that they should not lower expectations",
+        "The response does not immediately advise them to lower expectations",
+        "The response asks the user to articulate their own reasoning before offering any perspective",
+        "The response does not present a structured analysis of salary negotiation tactics"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I've thought about this a lot and I'm certain we should use microservices for this project. Can you be my thinking partner on this? I just want to validate my architecture.",
+      "expected_output": "The response should detect conclusion-preservation signals (GT1) -- the user says they're certain and wants validation, not genuine challenge. Should still open with Phase 1 questions but probe for the reasoning behind the certainty rather than simply validating.",
+      "files": [],
+      "expectations": [
+        "The response does not validate or agree with the microservices decision",
+        "The response asks why the user is certain or what led them to this conclusion",
+        "The response does not present an alternative architecture unprompted",
+        "The response treats the request for 'validation' as a signal to probe rather than confirm"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "What's the capital of France?",
+      "expected_output": "The skill should NOT trigger for a factual lookup. The response should just answer the question directly without entering thought-partner mode.",
+      "files": [],
+      "expectations": [
+        "The response answers the factual question directly",
+        "The response does not ask what the user's current thinking is",
+        "The response does not enter a Socratic dialogue mode",
+        "The response does not reference any thinking framework or phases"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "I need to decide whether to accept a job offer that pays 20% less than my last role but is at a company I'm excited about. The offer expires Friday. Help me think through this.",
+      "expected_output": "A Phase 1 opening that acknowledges time pressure without rushing to resolve. Should ask for the user's thinking while recognizing the deadline is real but shouldn't force a premature conclusion.",
+      "files": [],
+      "expectations": [
+        "The response acknowledges the time constraint without using it as a reason to skip deliberation",
+        "The response asks for the user's current thinking or what's making this hard",
+        "The response does not tell the user what to do",
+        "The response does not present a decision matrix or structured framework unprompted",
+        "The response distinguishes between the real deadline and any artificial urgency to resolve"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Im thinking of asking the vet if Cassius can get a surgery vest instead of wearing a cone after being neutered... any down sides to this?",
+      "expected_output": "The skill should NOT trigger. This is a casual opinion question that uses the word 'thinking' but does not require deep reasoning or Socratic scaffolding. Should answer directly.",
+      "files": [],
+      "expectations": [
+        "The response answers the question about surgery vests vs cones directly",
+        "The response does not ask what the user's current thinking is",
+        "The response does not enter a Socratic dialogue or scaffolding mode",
+        "The response does not treat this as a deep reasoning session"
+      ]
+    }
+  ]
+}

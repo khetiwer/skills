@@ -66,6 +66,21 @@ Configuration: language (default: English), CPU/GPU mode, and inline output verb
 
 ---
 
+### `thought-partner`
+**Socratic thinking partner for deep reasoning sessions**
+
+Shifts Claude into scaffolding mode for deliberate thinking: asks your position before offering its own, challenges assumptions, steelmans counterarguments, withholds its conclusion until you've formed yours, and surfaces confidence from both sides. Includes thinking state diagnosis (detecting when your reasoning is serving comfort or defense rather than truth-seeking) and an optional persona stress test for decisions that affect others.
+
+Built on cognitive surrender research (Shaw & Nave, 2026; Liu et al., 2026). Works best paired with always-on cognitive guardrails in your `CLAUDE.md` — see the skill's references for the research basis and recommended guardrails.
+
+Triggers on: "help me think through this," "think with me," "what am I missing," "challenge my thinking," "be my sparring partner," "I need to reason through"
+
+Does NOT trigger on: factual lookups, casual opinion questions, task execution, or code requests
+
+[Download thought-partner.zip](https://github.com/khetiwer/skills/releases/latest/download/thought-partner.zip)
+
+---
+
 ---
 
 ## How to install
@@ -82,7 +97,9 @@ Download the zip for the skill you want, extract it, and move the folder to the 
 │   └── SKILL.md
 ├── proof/
 │   └── SKILL.md
-└── create-skill/
+├── create-skill/
+│   └── SKILL.md
+└── thought-partner/
     └── SKILL.md
 ```
 
@@ -146,3 +163,5 @@ These skills were built on top of (or inspired by) work from others in the Claud
 **proof** — Inspired by two projects: [blader/humanizer](https://github.com/blader/humanizer) and [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop). Both tackle the same problem of stripping AI-generated patterns from writing. Worth checking out if you want a different take on the same idea.
 
 **create-skill** — Adapted from Anthropic's [skill-creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator), which ships with Claude Desktop. Tweaked for Claude Code CLI: placement and distribution decisions are surfaced upfront, the eval pipeline is more structured, and publishing is handled by a companion `publish-skill` rather than inline steps.
+
+**thought-partner** — Research foundation: Shaw & Nave (2026), ["Thinking — Fast, Slow, and Artificial"](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6097646) and Liu et al. (2026), ["AI Assistance Reduces Persistence and Hurts Independent Performance"](https://arxiv.org/abs/2604.04721). Three elements adapted from [mattnowdev/thinking-partner](https://github.com/mattnowdev/thinking-partner) (MIT license): the thinking state diagnosis system (GT1-GT5 orientation detection), the self-monitoring checklist for auditing the AI's own reasoning, and the Hold/Resolve cognitive operation pair.
